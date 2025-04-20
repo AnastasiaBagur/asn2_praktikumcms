@@ -32,13 +32,28 @@ class ArticleController extends Controller
 
     public function update(Request $request, $id)
     {
-        Article::update($id, $request->all());
+        $article = Article::find($id);
+        if ($article) {
+            $article->update($request->all());
+        }
         return redirect()->route('articles.index');
     }
 
     public function destroy($id)
     {
-        Article::delete($id);
+        $article = Article::find($id);
+        if ($article) {
+            $article->delete();
+        }
         return redirect()->route('articles.index');
+    }
+
+    public function show($id)
+    {
+        $article = Article::find($id);
+        if (!$article) {
+            abort(404);
+        }
+        return view('articles.show', compact('article'));
     }
 }

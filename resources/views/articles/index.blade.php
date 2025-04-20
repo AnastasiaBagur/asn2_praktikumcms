@@ -1,23 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Daftar Artikel</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Daftar Artikel')
+
+@section('content')
     <h1>Daftar Artikel</h1>
-    <a href="{{ route('articles.create') }}">Tambah Artikel</a>
-    <ul>
-        @foreach ($articles as $article)
-            <li>
-                {{ $article['title'] }} 
-                <a href="{{ route('articles.edit', $article['id']) }}">Edit</a>
-                <form action="{{ route('articles.destroy', $article['id']) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Hapus</button>
-                </form>
-            </li>
-        @endforeach
-    </ul>
-</body>
-</html>
+
+    @if(count($articles) > 0)
+        <ul>
+            @foreach($articles as $article)
+                <li>
+                    <a href="{{ route('articles.show', $article['id']) }}">{{ $article['title'] }}</a>
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <p>Tidak ada artikel.</p>
+    @endif
+@endsection
